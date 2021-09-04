@@ -4,10 +4,11 @@
   "description": "Starter project for kata (Node, TypeScript, Jest)",
   "main": "index.js",
   "scripts": {
+    "exec": "tsc && node src/index.js",
     "test": "jest --watch --config --coverage jest.config.json",
     "format": "prettier --write \"src/**/*.ts\""
   },
-  "devDependencies": {
+  "dependencies": {
     "@babel/core": "^7.12.10",
     "@babel/preset-env": "^7.12.10",
     "@babel/preset-typescript": "^7.12.7",
