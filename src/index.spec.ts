@@ -46,24 +46,82 @@ function runGoldenMaster(testIndex: number, scenario: () => void): void {
   }
 }
 
-it("Scenario #0", function () {
+it("Scenario #0: a 3-players game where all users answer correctly", function () {
   runGoldenMaster(0, function () {
-    const game = new Game();
-    game.add("Anna");
-    game.add("Thomas");
-    game.add("Pauline");
-    game.roll(3);
-    game.wasCorrectlyAnswered();
-  });
-});
-
-it("Scenario #1", function () {
-  runGoldenMaster(1, function () {
     const game = new Game();
     game.add("Chloe");
     game.add("Omar");
     game.add("Sebastian");
+    game.roll(3);
+    console.log(game.wasCorrectlyAnswered());
     game.roll(1);
-    game.wrongAnswer();
+    console.log(game.wasCorrectlyAnswered());
+    game.roll(4);
+    console.log(game.wasCorrectlyAnswered());
+    game.roll(3);
+    console.log(game.wasCorrectlyAnswered());
+    game.roll(1);
+    console.log(game.wasCorrectlyAnswered());
+    game.roll(4);
+    console.log(game.wasCorrectlyAnswered());
+    game.roll(3);
+    console.log(game.wasCorrectlyAnswered());
+    game.roll(1);
+    console.log(game.wasCorrectlyAnswered());
+    game.roll(4);
+    console.log(game.wasCorrectlyAnswered());
+    game.roll(3);
+    console.log(game.wasCorrectlyAnswered());
+    game.roll(1);
+    console.log(game.wasCorrectlyAnswered());
+    game.roll(4);
+    console.log(game.wasCorrectlyAnswered());
+    game.roll(3);
+    console.log(game.wasCorrectlyAnswered());
+    game.roll(1);
+    console.log(game.wasCorrectlyAnswered());
+    game.roll(4);
+    console.log(game.wasCorrectlyAnswered());
+    game.roll(3);
+    console.log(game.wasCorrectlyAnswered());
+    game.roll(1);
+    console.log(game.wasCorrectlyAnswered());
+    game.roll(4);
+    console.log(game.wasCorrectlyAnswered());
+    game.roll(3);
+    console.log(game.wasCorrectlyAnswered());
+    game.roll(1);
+    console.log(game.wasCorrectlyAnswered());
+    game.roll(4);
+    console.log(game.wasCorrectlyAnswered());
+  });
+});
+
+it("Scenario #1: a 2-players game with some wrong answers, hence penalty box", function () {
+  runGoldenMaster(1, function () {
+    const game = new Game();
+    game.add("Chloe");
+    game.add("Omar");
+    game.roll(3);
+    console.log(game.wasCorrectlyAnswered());
+    game.roll(2);
+    console.log(game.wasCorrectlyAnswered());
+    game.roll(3);
+    console.log(game.wrongAnswer());
+    game.roll(2);
+    console.log(game.wasCorrectlyAnswered());
+    game.roll(2);
+    console.log(game.wasCorrectlyAnswered());
+    game.roll(2);
+    // The next line is necessary, even if no question is poped, because it allows to move to the next player (!)
+    console.log(game.wasCorrectlyAnswered());
+    game.roll(5);
+    console.log(game.wrongAnswer());
+    game.roll(2);
+    console.log(game.wasCorrectlyAnswered());
+    game.roll(5);
+    console.log(game.wasCorrectlyAnswered());
+    game.roll(2);
+    console.log(game.wasCorrectlyAnswered());
   });
 });
