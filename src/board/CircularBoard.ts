@@ -28,9 +28,8 @@ export class CircularBoard implements Board {
     return (location + roll) % this.size;
   }
 
-  askQuestion(location: number): void {
+  askQuestion(location: number): string {
     const category = this.locationToCategoryMap[location % 4];
-    console.log("The category is " + category);
-    console.log(this.questions.getNextQuestion(category));
+    return this.questions.getNextQuestion(category);
   }
 }

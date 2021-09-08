@@ -14,21 +14,17 @@ export class Game {
 
   constructor(players: Player[]) {
     this.players = new PlayerSet(players);
-    players.forEach(({ name }, index) => {
-      console.log(name + " was added");
-      console.log("They are player number " + (index + 1));
-    });
   }
 
   roll(value: DiceRoll): void {
     this.players.getCurrentPlayer().roll(this.board, value);
   }
 
-  currentPlayerGivesTheCorrectAnswer(): boolean {
+  currentPlayerGivesTheCorrectAnswer(): void {
     return this.players.getCurrentPlayer().giveTheCorrectAnswer(this.players);
   }
 
-  currentPlayerGivesAWrongAnswer(): boolean {
+  currentPlayerGivesAWrongAnswer(): void {
     return this.players.getCurrentPlayer().giveAWrongAnswer(this.players);
   }
 }

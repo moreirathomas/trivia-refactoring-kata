@@ -12,8 +12,8 @@ export class Player {
   private _isInPenaltyBox = false;
 
   constructor(public readonly name: String) {
-    this.location = new Location(this.name);
-    this.score = new Score(this.name);
+    this.location = new Location();
+    this.score = new Score();
   }
 
   isInPenaltyBox(): boolean {
@@ -29,9 +29,6 @@ export class Player {
   }
 
   roll(board: Board, value: DiceRoll): void {
-    console.log(this.name + " is the current player");
-    console.log("They have rolled a " + value);
-
     if (!this._isInPenaltyBox) {
       this.location.move(board, value);
       board.askQuestion(this.location.get());
@@ -44,37 +41,27 @@ export class Player {
       board.askQuestion(this.location.get());
       return;
     }
-
-    console.log(this.name + " is not getting out of the penalty box");
   }
 
-  giveTheCorrectAnswer(players: PlayerSet): boolean {
+  giveTheCorrectAnswer(players: PlayerSet): void {
     if (!this._isInPenaltyBox) {
-      console.log("Answer was correct!!!!");
       this.score.increment();
-      const gameMustContinue = !(this.score.get() == NUMBER_OF_POINTS_REQUIRED_TO_WIN);
       players.turnToNextPlayer();
-      return gameMustContinue;
+      return;
     }
     players.turnToNextPlayer();
-    const gameMustContinue = true;
-    return gameMustContinue;
   }
 
-  giveAWrongAnswer(players: PlayerSet): boolean {
-    console.log("Question was incorrectly answered");
+  giveAWrongAnswer(players: PlayerSet): void {
     this.sendInPenaltyBox();
     players.turnToNextPlayer();
-    return true;
   }
 
   private sendInPenaltyBox(): void {
     this._isInPenaltyBox = true;
-    console.log(this.name + " was sent to the penalty box");
   }
 
   private getOutFromPenaltyBox(): void {
     this._isInPenaltyBox = false;
-    console.log(this.name + " is getting out of the penalty box");
   }
 }
