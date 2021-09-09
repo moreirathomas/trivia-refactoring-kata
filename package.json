@@ -4,7 +4,7 @@
   "description": "Starter project for kata (Node, TypeScript, Jest)",
   "main": "index.js",
   "scripts": {
-    "exec": "tsc && node src/index.js",
+    "exec": "tsc && node dist/index.js",
     "test": "jest --watch --config --coverage jest.config.json",
     "format": "prettier --write \"src/**/*.ts\""
   },
