@@ -51,12 +51,16 @@ it("Scenario #0 - loop over players", function () {
     const game = new Game();
     game.add("Anna");
     game.add("Thomas");
+
     game.roll(3);
-    game.wasCorrectlyAnswered();
+    game.correctAnwser();
+
     game.roll(2);
-    game.wasCorrectlyAnswered();
+    game.correctAnwser();
+
     game.roll(1);
     game.wrongAnswer();
+
     game.roll(6);
     game.wrongAnswer();
   });
@@ -69,14 +73,18 @@ it("Scenario #1 - choose category", function () {
     game.add("Omar");
     game.add("Sebastian");
     game.add("Roger");
+
     game.roll(1);
-    game.wasCorrectlyAnswered();
+    game.correctAnwser();
+
     game.roll(2);
-    game.wasCorrectlyAnswered();
+    game.correctAnwser();
+
     game.roll(3);
-    game.wasCorrectlyAnswered();
+    game.correctAnwser();
+
     game.roll(4);
-    game.wasCorrectlyAnswered();
+    game.correctAnwser();
   });
 });
 
@@ -84,11 +92,14 @@ it("Scenario #2 - wrong anwser", function () {
   runGoldenMaster(2, function () {
     const game = new Game();
     game.add("Bob");
+
     game.roll(1);
-    game.wrongAnswer(); // Get in penalty box
-    game.roll(2); // Even: do not get out
     game.wrongAnswer();
-    game.roll(3); // Odd: get out
+
+    game.roll(2);
+    game.wrongAnswer();
+
+    game.roll(3);
     game.wrongAnswer();
   });
 });
@@ -97,20 +108,27 @@ it("Scenario #3 - correct anwser", function () {
   runGoldenMaster(3, function () {
     const game = new Game();
     game.add("Bob");
+
     game.roll(1);
-    game.wasCorrectlyAnswered();
+    game.correctAnwser();
+
     game.roll(2);
-    game.wasCorrectlyAnswered();
+    game.correctAnwser();
+
     game.roll(3);
-    game.wasCorrectlyAnswered();
+    game.correctAnwser();
+
     game.roll(1);
-    game.wasCorrectlyAnswered();
+    game.correctAnwser();
+
     game.roll(2);
-    game.wasCorrectlyAnswered();
+    game.correctAnwser();
+
     game.roll(3);
-    game.wasCorrectlyAnswered();
-    // Game should stop here
+    game.correctAnwser();
+
+    // FIXME Game should stop here
     game.roll(6);
-    game.wasCorrectlyAnswered();
+    game.correctAnwser();
   });
 });
