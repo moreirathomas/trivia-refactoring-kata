@@ -182,8 +182,6 @@ it("🐛 unhandled case for questions in a given category all exhausted", functi
     }
 
     // Game does not end, it should be an error
-    game.roll(4);
-    let output = game.wasCorrectlyAnswered();
-    console.log(output);
+    expect(() => game.roll(4)).toThrowError();
   });
 });

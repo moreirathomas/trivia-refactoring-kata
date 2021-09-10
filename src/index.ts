@@ -60,8 +60,7 @@ export class Game {
     const question = this.questions[category].shift();
     // TODO unhandled case in legacy code.
     if (!question) {
-      console.log(`out of ${this.currentCategory(this.getCurrentPlayer().position)} question !`);
-      return;
+      throw new Error(`out of ${this.currentCategory(this.getCurrentPlayer().position)} question !`);
     }
     console.log(`${question.category} Question ${question.index}`);
   }
