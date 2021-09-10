@@ -12,8 +12,8 @@ export class Game {
     return new Game([]);
   }
 
-  withPlayer(player: Player): Game {
-    return new Game([...this.players, player], this.poolSize);
+  withPlayers(...players: Player[]): Game {
+    return new Game([...this.players, ...players], this.poolSize);
   }
 
   withPoolSize(poolSize: number): Game {
@@ -21,6 +21,10 @@ export class Game {
   }
 
   build(): NotInPenaltyBoxAndAboutToRollPlayer {
+    if (this.players.length < 2) {
+      throw new Error("The game cannot start without at least 2 players");
+    }
+
     const board = new CircularBoard({
       size: BOARD_SIZE,
       questionPoolSize: this.poolSize,

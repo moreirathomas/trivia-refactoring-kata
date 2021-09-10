@@ -5,8 +5,8 @@ it("players should alternate", function () {
   const chloe = new Player("Chloe");
   const omar = new Player("Omar");
   const name = Game.builder() //
-    .withPlayer(chloe)
-    .withPlayer(omar)
+    .withPlayers(chloe)
+    .withPlayers(omar)
     .build()
     .roll(1)
     .giveTheCorrectAnswer().player.name;
@@ -17,8 +17,7 @@ it("players should alternate (case: going into penalty box)", function () {
   const chloe = new Player("Chloe");
   const omar = new Player("Omar");
   const name = Game.builder() //
-    .withPlayer(chloe)
-    .withPlayer(omar)
+    .withPlayers(chloe, omar)
     .build()
     .roll(1)
     .giveAWrongAnswer().player.name;
@@ -29,23 +28,22 @@ it("players should alternate (case: in penalty box)", function () {
   const chloe = new Player("Chloe");
   const omar = new Player("Omar");
   const name = Game.builder() //
-    .withPlayer(chloe)
-    .withPlayer(omar)
+    .withPlayers(chloe, omar)
     .build()
     .roll(1)
     .giveAWrongAnswer()
     .roll(5)
     .giveTheCorrectAnswer()
-    .roll(2).player.name;
-  expect(name).toEqual("Chloe");
+    .roll(2)
+    .pass().player.name;
+  expect(name).toEqual("Omar");
 });
 
 it("players should alternate (case: going out of the penalty box)", function () {
   const chloe = new Player("Chloe");
   const omar = new Player("Omar");
   const name = Game.builder() //
-    .withPlayer(chloe)
-    .withPlayer(omar)
+    .withPlayers(chloe, omar)
     .build()
     .roll(1)
     .giveAWrongAnswer()
@@ -54,4 +52,9 @@ it("players should alternate (case: going out of the penalty box)", function () 
     .roll(1)
     .giveTheCorrectAnswer().player.name;
   expect(name).toEqual("Omar");
+});
+
+it("game should not start without at least 2 players", function () {
+  const chloe = new Player("Chloe");
+  expect(() => Game.builder().withPlayers(chloe).build()).toThrowError();
 });

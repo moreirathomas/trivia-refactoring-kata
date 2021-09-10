@@ -29,4 +29,8 @@ export class Player {
   getScore(): number {
     return this.score.get();
   }
+
+  hasWon(): boolean {
+    return this.getScore() === NUMBER_OF_POINTS_REQUIRED_TO_WIN;
+  }
 }

@@ -78,4 +78,14 @@ describe("Test of the core game rules", function () {
       .giveTheCorrectAnswer();
     expect(pauline.getScore()).toEqual(1);
   });
+
+  it("a player who reaches the maximum score should win and an error must thrown as a flag value", function () {
+    const pauline = new Player("Pauline");
+    for (let i = 0; i < 5; i++) {
+      pauline.score.increment();
+    }
+    const laurent = new Player("Laurent");
+    const players = new PlayerSet([pauline, laurent]);
+    expect(() => new StartPlayer(board, players).roll(2).giveTheCorrectAnswer()).toThrowError(/Pauline/ && /won/);
+  });
 });

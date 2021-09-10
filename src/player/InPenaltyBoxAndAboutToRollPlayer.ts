@@ -12,7 +12,6 @@ export class InPenaltyBoxAndAboutToRollPlayer {
 
   roll(value: DiceRoll): AboutToAnswerPlayer {
     if (isEven(value)) {
-      this.board.askQuestion(this.player.location.get());
       return new AboutToAnswerPlayer(this.board, this.players);
     }
     this.player.getOutFromPenaltyBox();

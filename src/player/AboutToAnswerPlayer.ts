@@ -16,11 +16,14 @@ export class AboutToAnswerPlayer {
   }
 
   giveTheCorrectAnswer(): AboutToRollPlayer {
-    if (!this.player.isInPenaltyBox()) {
-      this.player.score.increment();
-      return this.turnToNextPlayer();
+    if (this.player.isInPenaltyBox()) {
+      throw Error("This player is assumed not to be in the penalty box!");
     }
-    throw Error("This player is assumed not to be in the penalty box!");
+    this.player.score.increment();
+    if (this.player.hasWon()) {
+      throw Error("Game over: " + this.player.name + " has won!");
+    }
+    return this.turnToNextPlayer();
   }
 
   giveAWrongAnswer(): AboutToRollPlayer {
@@ -34,5 +37,9 @@ export class AboutToAnswerPlayer {
       return new InPenaltyBoxAndAboutToRollPlayer(this.board, updatedPlayers);
     }
     return new NotInPenaltyBoxAndAboutToRollPlayer(this.board, updatedPlayers);
+  }
+
+  pass(): AboutToRollPlayer {
+    return this.turnToNextPlayer();
   }
 }

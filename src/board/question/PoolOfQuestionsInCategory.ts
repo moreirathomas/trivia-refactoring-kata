@@ -9,7 +9,15 @@ export class PoolOfQuestionsInCategory {
   }
 
   getNextQuestion(): string {
-    return this.questions[this.numberOfQuestionsAsked++];
+    const question = this.questions[this.numberOfQuestionsAsked];
+    this.numberOfQuestionsAsked++;
+
+    if (question) {
+      return question;
+    }
+    // We exhausted the pool for this category. Reshuffle the questions.
+    this.numberOfQuestionsAsked = 0;
+    return this.getNextQuestion();
   }
 
   private generateQuestion(index: number): string {
