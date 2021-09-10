@@ -77,7 +77,7 @@ export class Game {
   /**
    * Changes the game state to reflect a correct answer by the current player.
    */
-  public correctAnwser(): boolean {
+  public wasCorrectlyAnswered(): boolean {
     const player = this.getCurrentPlayer();
 
     if (player.isInPenaltyBox && !player.isGettingOutOfPenaltyBox) {

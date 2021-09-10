@@ -46,89 +46,144 @@ function runGoldenMaster(testIndex: number, scenario: () => void): void {
   }
 }
 
-it("Scenario #0 - loop over players", function () {
+it("players should take turn one after the other", function () {
   runGoldenMaster(0, function () {
     const game = new Game();
-    game.add("Anna");
-    game.add("Thomas");
-
-    game.roll(3);
-    game.correctAnwser();
-
-    game.roll(2);
-    game.correctAnwser();
+    game.add("Alice");
+    game.add("Bob");
+    game.add("Chad");
+    game.add("Dan");
 
     game.roll(1);
-    game.wrongAnswer();
-
-    game.roll(6);
-    game.wrongAnswer();
-  });
-});
-
-it("Scenario #1 - choose category", function () {
-  runGoldenMaster(1, function () {
-    const game = new Game();
-    game.add("Chloe");
-    game.add("Omar");
-    game.add("Sebastian");
-    game.add("Roger");
-
-    game.roll(1);
-    game.correctAnwser();
+    let output = game.wasCorrectlyAnswered();
+    console.log(output);
 
     game.roll(2);
-    game.correctAnwser();
+    output = game.wasCorrectlyAnswered();
+    console.log(output);
 
-    game.roll(3);
-    game.correctAnwser();
+    game.roll(5);
+    output = game.wasCorrectlyAnswered();
+    console.log(output);
 
     game.roll(4);
-    game.correctAnwser();
+    output = game.wasCorrectlyAnswered();
+    console.log(output);
+
+    game.roll(2);
+    output = game.wasCorrectlyAnswered();
+    console.log(output); // Back to Alice
   });
 });
 
-it("Scenario #2 - wrong anwser", function () {
+it("a player should go in penalty box", function () {
+  runGoldenMaster(1, function () {
+    const game = new Game();
+    game.add("Alice");
+    game.add("Bob");
+
+    game.roll(1);
+    let output = game.wrongAnswer();
+    console.log(output);
+
+    game.roll(2);
+    output = game.wasCorrectlyAnswered();
+    console.log(output);
+
+    game.roll(5);
+    output = game.wasCorrectlyAnswered();
+    console.log(output);
+  });
+});
+
+it("a player should move out of penalty box if they rolled odd", function () {
   runGoldenMaster(2, function () {
     const game = new Game();
+    game.add("Alice");
     game.add("Bob");
 
     game.roll(1);
-    game.wrongAnswer();
+    let output = game.wrongAnswer(); // Alice goes into penalty box
+    console.log(output);
 
     game.roll(2);
-    game.wrongAnswer();
+    output = game.wasCorrectlyAnswered();
+    console.log(output);
+
+    game.roll(5); // Alice gets out of penalty box
+    output = game.wasCorrectlyAnswered();
+    console.log(output);
 
     game.roll(3);
-    game.wrongAnswer();
+    output = game.wasCorrectlyAnswered();
+    console.log(output);
+
+    game.roll(1); // Alice was not in penalty box
+    output = game.wrongAnswer(); // Alice goes into penalty box
+    console.log(output);
   });
 });
 
-it("Scenario #3 - correct anwser", function () {
+it("a player should stay in of penalty box if they rolled even", function () {
   runGoldenMaster(3, function () {
     const game = new Game();
+    game.add("Alice");
     game.add("Bob");
 
     game.roll(1);
-    game.correctAnwser();
+    let output = game.wrongAnswer(); // Alice goes into penalty box
+    console.log(output);
 
     game.roll(2);
-    game.correctAnwser();
+    output = game.wasCorrectlyAnswered();
+    console.log(output);
+
+    game.roll(6); // Alice stays of penalty box
+    output = game.wasCorrectlyAnswered();
+    console.log(output);
 
     game.roll(3);
-    game.correctAnwser();
+    output = game.wasCorrectlyAnswered();
+    console.log(output);
 
+    game.roll(1); // Alice is still in penalty box but gets out now
+    output = game.wasCorrectlyAnswered();
+    console.log(output);
+  });
+});
+
+it("🐛 the game does not end when a player has 6 coins", function () {
+  runGoldenMaster(4, function () {
+    const game = new Game();
+    game.add("Bob");
+
+    for (let i = 0; i < 6; i++) {
+      game.roll(2);
+      let output = game.wasCorrectlyAnswered(); // Bob eventually has 6 coins
+      console.log(output); // output is false for i = 6
+    }
+
+    // Game does not end, it should be an error
     game.roll(1);
-    game.correctAnwser();
+    let output = game.wasCorrectlyAnswered();
+    console.log(output);
+  });
+});
 
-    game.roll(2);
-    game.correctAnwser();
+it("🐛 unhandled case for questions in a given category all exhausted", function () {
+  runGoldenMaster(5, function () {
+    const game = new Game();
+    game.add("Alice");
 
-    game.roll(3);
-    game.correctAnwser();
+    for (let i = 0; i < 50; i++) {
+      game.roll(4); // Always land on the same category
+      let output = game.wasCorrectlyAnswered();
+      console.log(output);
+    }
 
-    // FIXME Game should stop here
-    game.roll(6);
-    game.correctAnwser();
+    // Game does not end, it should be an error
+    game.roll(4);
+    let output = game.wasCorrectlyAnswered();
+    console.log(output);
   });
 });
